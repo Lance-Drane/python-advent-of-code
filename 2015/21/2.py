@@ -36,8 +36,8 @@ def win_battle(player_damage, player_armor):
     player_hp = 100
     boss_hp_local = boss_hp
     while player_hp > 0 and boss_hp_local > 0:
-        boss_hp_local -= player_damage - boss_armor
-        player_hp -= boss_damage - player_armor
+        boss_hp_local -= max(player_damage - boss_armor, 1)
+        player_hp -= max(boss_damage - player_armor, 1)
     # check boss HP, as player goes first
     return boss_hp_local <= 0
 
