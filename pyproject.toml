@@ -1,0 +1,34 @@
+[tool.ruff]
+line-length = 120
+format = {quote-style = 'single'}
+extend-select = [
+    'C90',
+    'I',
+    'UP',
+    'FBT',
+    'B',
+    'A',
+    'COM',
+    'C4',
+    'ISC',
+    'PIE',
+    'PYI',
+    'Q',
+    'RET',
+    'SLF',
+    'SIM',
+    'TID',
+    'PL',
+    'FLY',
+    'PERF',
+    'RUF',
+]
+ignore = [
+    'PLR2004', # "magic values" are fine in single-file scripts
+    'COM812', # formatter
+    'ISC001', # formatter
+]
+flake8-quotes = {inline-quotes = 'single', multiline-quotes = 'double'}
+mccabe = { max-complexity = 14 }
+pylint = { max-branches = 15 }
+target-version = "py311"

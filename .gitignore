@@ -1,0 +1,18 @@
+# text files
+*.txt
+!in.txt
+!1_out.txt
+!2_out.txt
+
+# boilerplate
+*.log
+.venv
+.ruff_cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.mypy_cache/
+.dmypy.json
+dmypy.json
+__pypackages__/
