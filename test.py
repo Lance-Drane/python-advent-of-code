@@ -22,10 +22,10 @@ def run_command(path):
             f'python ./{path}/{num}.py < ./{path}/in.txt', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
         ).communicate()
         if target != stdout:
-            print(f"Failed: ./{path}/{num} . Expected '{target}', got '{stdout}'", file=sys.stderr)
+            print(f"Failed: {path}/{num} . Expected '{target}', got '{stdout}'", file=sys.stderr)
             rc = 1
         else:
-            print(f'Success: ./{path}/{num}', file=sys.stderr)
+            print(f'Success: {path}/{num}', file=sys.stderr)
     return rc
 
 
