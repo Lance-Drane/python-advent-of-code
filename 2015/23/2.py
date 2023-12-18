@@ -2,8 +2,8 @@ import re
 import sys
 
 registers = {
-    "a": 1,
-    "b": 0,
+    'a': 1,
+    'b': 0,
 }
 
 instructions = tuple(tuple(a for a in re.findall(r'[\w-]+', line)) for line in sys.stdin.readlines())
@@ -11,7 +11,7 @@ curr = 0
 
 while curr < len(instructions) and curr >= 0:
     instruct = instructions[curr]
-    
+
     if instruct[0] == 'hlf':
         registers[instruct[1]] >>= 1
         curr += 1
