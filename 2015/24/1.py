@@ -6,11 +6,9 @@ presents = [int(line) for line in sys.stdin.readlines()]
 target = sum(presents) // 3
 
 combo_length = 1
-combos = []
-while True:
+combos = None
+while not combos:
     combos = list(filter(lambda c: sum(c) == target, combinations(presents, combo_length)))
-    if combos:
-        break
     combo_length += 1
 
 print(min(prod(combo) for combo in combos))
