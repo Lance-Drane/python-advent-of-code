@@ -56,9 +56,7 @@ for w_cost, w_damage, w_armor in weapons:
     for a_cost, a_damage, a_armor in armor:
         for idx, (r1_cost, r1_damage, r1_armor) in enumerate(rings):
             for r2_cost, r2_damage, r2_armor in rings[idx + 1 :]:
-                if win_battle(
-                    w_damage + a_damage + r1_damage + r2_damage, w_armor + a_armor + r1_armor + r2_armor
-                ):
+                if win_battle(w_damage + a_damage + r1_damage + r2_damage, w_armor + a_armor + r1_armor + r2_armor):
                     best = min(best, w_cost + a_cost + r1_cost + r2_cost)
 
 print(best)
