@@ -1,5 +1,6 @@
 # text files
 *.txt
+!requirements.txt
 !in.txt
 !1_out.txt
 !2_out.txt
