@@ -1,3 +1,4 @@
+# WARNING: seems to only run on Linux right now.
 # Script to test all Advent of Code scripts in parallel.
 # Script exits 1 if any subscript fails, but will wait to execute all subscripts first.
 
