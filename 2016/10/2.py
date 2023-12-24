@@ -16,7 +16,7 @@ def parse_input():
 
 instructions = list(parse_input())
 
-while True:
+while any(a for a in bots.values()):
     for line in instructions:
         chips = bots[line[1]]
         if len(chips) < 2:
@@ -31,7 +31,5 @@ while True:
         else:
             outputs[line[11]] = high
         chips.clear()
-    if all(not a for a in bots.values()):
-        break
 
 print(outputs['0'] * outputs['1'] * outputs['2'])
