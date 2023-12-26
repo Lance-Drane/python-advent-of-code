@@ -2,4 +2,4 @@
 import re
 import sys
 
-print(sum(int(a) for a in re.findall(r'-?\d+', sys.stdin.read())))
+print(sum(int(a.group()) for a in re.finditer(r'-?\d+', sys.stdin.read())))

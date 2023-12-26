@@ -10,7 +10,7 @@ def combos():
                 yield a, b, c, 100 - a - b - c
 
 
-ingredients = tuple(tuple(int(a) for a in re.findall(r'-?\d+', line)) for line in sys.stdin.readlines())
+ingredients = tuple(tuple(int(a.group()) for a in re.finditer(r'-?\d+', line)) for line in sys.stdin.readlines())
 
 print(
     max(

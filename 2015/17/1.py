@@ -1,14 +1,15 @@
 import sys
 
+TARGET = 150
 
-def subset_sum(numbers, target, partial, partial_sum):
-    if partial_sum == target:
+
+def subset_sum(numbers, partial, partial_sum):
+    if partial_sum == TARGET:
         yield partial
-    if partial_sum >= target:
+    if partial_sum >= TARGET:
         return
     for i, n in enumerate(numbers):
-        remaining = numbers[i + 1 :]
-        yield from subset_sum(remaining, target, [*partial, n], partial_sum + n)
+        yield from subset_sum(numbers[i + 1 :], [*partial, n], partial_sum + n)
 
 
-print(sum(1 for _ in subset_sum([int(line) for line in sys.stdin.readlines()], 150, [], 0)))
+print(sum(1 for _ in subset_sum([int(line) for line in sys.stdin.readlines()], [], 0)))

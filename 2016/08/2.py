@@ -13,7 +13,7 @@ for line in sys.stdin.readlines():
         cols, rows = map(int, parts[1].split('x'))
         for i in range(rows):
             for j in range(cols):
-                grid[i][j] = '#'
+                grid[i][j] = '|'
         continue
 
     # rotation

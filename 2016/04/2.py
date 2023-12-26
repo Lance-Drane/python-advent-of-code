@@ -8,6 +8,6 @@ for line in sys.stdin.readlines():
         sector_id = int(parts[-1][: parts[-1].find('[')])
         num_shifts = sector_id % 26
         decrypt = ''.join([chr(a - 26) if a > 122 else chr(a) for a in (ord(c) + num_shifts for c in encrypted_room)])
-        if 'northpole' in decrypt:
+        if decrypt.startswith('northpole'):
             print(sector_id)
             break

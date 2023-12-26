@@ -6,7 +6,7 @@ registers = {
     'b': 0,
 }
 
-instructions = tuple(tuple(a for a in re.findall(r'[\w-]+', line)) for line in sys.stdin.readlines())
+instructions = tuple(tuple(a.group() for a in re.finditer(r'[\w-]+', line)) for line in sys.stdin.readlines())
 curr = 0
 
 while curr < len(instructions) and curr >= 0:
