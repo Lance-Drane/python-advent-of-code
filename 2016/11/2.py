@@ -1,76 +1,72 @@
+import heapq
 import re
 import sys
-from collections import deque
-from copy import deepcopy
 from itertools import chain, combinations
+
+# a lot of this solution, particularly the last floor heuristic, was taken from:
+# https://www.reddit.com/r/adventofcode/comments/5hoia9/comment/db1zbu0/
 
 
 def parse_input():
-    read_state = [set() for _ in range(4)]
+    elements_seen = {}
+    read_state: list[list[int]] = [[] for _ in range(4)]
     for idx, line in enumerate(sys.stdin.readlines()):
         for item in re.finditer(r'[\w-]+ microchip|[\w-]+ generator', line):
             element, entity = item.group().split(' ')
             hyphen = element.find('-')
             refined = element if hyphen == -1 else element[:hyphen]
-            read_state[idx].add((refined, entity))
-    return read_state
+            num_rep = elements_seen.get(refined, None)
+            if not num_rep:
+                num_rep = len(elements_seen) + 1
+                elements_seen[refined] = num_rep
+            read_state[idx].append(num_rep if entity == 'generator' else -num_rep)
+        read_state[idx] = tuple(sorted(read_state[idx]))
+    return (0, tuple(read_state))
 
 
-def get_state_hash(elevator, state):
-    state_hash = sorted(item for sublist in state for item in sublist)
-    for floor, sublist in enumerate(state):
-        for item in sublist:
-            state_hash[state_hash.index(item)] = floor
-    return (elevator, tuple(state_hash))
+def no_explosion(floor):
+    if not floor or floor[-1] < 0:  # no generators
+        return True
+    return all(-chip in floor for chip in floor if chip < 0)
 
 
-def get_next_state(elevator: int, state: list[set[tuple[str, str]]]):
-    # with 2-length combinations: don't move incompatible pairs
-    for combo in chain(
-        combinations(state[elevator], 1),
-        filter(lambda c: c[0][0] == c[1][0] or c[0][1] == c[1][1], combinations(state[elevator], 2)),
-    ):
-        for new_elevator in (elevator - 1, elevator + 1):
-            if new_elevator < 0 or new_elevator > 3:
-                continue
-            # do not go down if there is no item below where we are
-            if new_elevator < elevator and not any(len(state[idx]) for idx in range(elevator)):
-                continue
-            new_state = deepcopy(state)
-            for item in combo:
-                new_state[elevator].remove(item)
-                new_state[new_elevator].add(item)
-            # validate no explosion on both last floor and next floor
-            safe = True
-            for floor in elevator, new_elevator:
-                generators = {sta for sta in new_state[floor] if sta[1] == 'generator'}
-                if generators and any(
-                    sta[1] != 'generator' and (sta[0], 'generator') not in generators for sta in new_state[floor]
-                ):
-                    safe = False
-                    break
-            if safe:
-                yield new_elevator, new_state
+initial = parse_input()
+heap = []
+heapq.heappush(heap, (0, initial))
+state_costs = {initial: 0}
 
-
-# TODO make me faster!
-initial_state = parse_input()
-queue: deque[tuple[int, int, list[set[tuple[str, str]]]]] = deque([(0, 0, initial_state)])
-visited = {get_state_hash(0, initial_state)}
-while queue:
-    moves, elevator, state = queue.popleft()
-    # success
-    if len(state[3]) and not any(len(state[idx]) for idx in range(3)):
-        # we don't need to manage the input for the new items. We add two complete pairs on the first floor.
-        # It will ALWAYS take 12 moves minimum to move a complete pair from floor 1 to floor 4
-        # so just add 24 to the sum from part 1
-        print(moves + 24)
+while heap:
+    _, current = heapq.heappop(heap)
+    floor, items = current
+    if floor == 3 and not any(len(f) for f in items[:-1]):
         break
 
-    for new_elevator, new_state in get_next_state(elevator, state):
-        new_hash = get_state_hash(new_elevator, new_state)
-        if new_hash in visited:
-            continue
-        visited.add(new_hash)
-        # print(new_hash)
-        queue.append((moves + 1, new_elevator, new_state))
+    directions = [direc for direc in (-1, 1) if 0 <= floor + direc < 4]
+    # with 2-length combinations: don't move incompatible pairs
+    for move in chain(
+        combinations(items[floor], 1),
+        filter(lambda c: abs(c[0]) == abs(c[1]) or c[0] * c[1] > 0, combinations(items[floor], 2)),
+    ):
+        for direction in directions:
+            # do not go down if there is no item below where we are
+            if direction == -1 and not any(len(f) for f in items[:floor]):
+                continue
+            new_floors = list(items)
+            new_floors[floor] = tuple(x for x in items[floor] if x not in move)
+            new_floors[floor + direction] = tuple(sorted(items[floor + direction] + move))
+
+            if not no_explosion(new_floors[floor]) or not no_explosion(new_floors[floor + direction]):
+                continue
+
+            next_state = (floor + direction, tuple(new_floors))
+            new_cost = state_costs[current] + 1
+            if next_state not in state_costs or new_cost < state_costs[next_state]:
+                state_costs[next_state] = new_cost
+                # prioritize adding items to floor 4
+                priority = new_cost - len(new_floors[3]) * 10
+                heapq.heappush(heap, (priority, next_state))
+
+# we don't need to manage the input for the new items. We add two complete pairs on the first floor.
+# It will ALWAYS take 12 moves minimum to move a complete pair from floor 1 to floor 4
+# so just add 24 to the sum from part 1
+print(state_costs[current] + 24)
