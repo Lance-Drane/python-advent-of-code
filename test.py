@@ -6,6 +6,7 @@ import glob
 import os
 import subprocess
 import sys
+import time
 
 # TODO maybe use threading here instead of multiprocessing
 from multiprocessing import Pool
@@ -19,14 +20,22 @@ def run_command(path):
     for num in range(1, 3):
         with open(f'./{path}/{num}_out.txt', 'rb') as f:
             target = f.read()
+        with open(f'./{path}/in.txt', 'rb') as f:
+            stdin = f.read()
+        start = time.time()
         stdout, _ = subprocess.Popen(
-            f'python ./{path}/{num}.py < ./{path}/in.txt', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
-        ).communicate()
+            f'python ./{path}/{num}.py',
+            shell=True,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        ).communicate(input=stdin)
+        end = time.time()
         if target != stdout:
             print(f"Failed: {path}/{num} . Expected '{target}', got '{stdout}'", file=sys.stderr)
             rc = 1
         else:
-            print(f'Success: {path}/{num}', file=sys.stderr)
+            print(f'Success: {path}/{num} . Completed in {end - start} seconds', file=sys.stderr)
     return rc
 
 
