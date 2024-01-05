@@ -9,7 +9,7 @@ def is_open(char: str) -> bool:
 initial = input()
 initial_len = len(initial)
 queue = deque([(0, initial)])
-best = []
+best = ''
 
 while queue:
     position, passcode = queue.popleft()
