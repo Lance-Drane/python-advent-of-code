@@ -1,5 +1,5 @@
 def flip_bits(binary_str: str):
-    inverse = int(binary_str, 2) ^ (2 ** (len(binary_str) + 1) - 1)
+    inverse = int(binary_str, 2) ^ ((1 << (len(binary_str) + 1)) - 1)
     return bin(inverse)[3:]
 
 
@@ -8,7 +8,7 @@ TARGET_LENGTH = 35651584
 data = input()
 while len(data) < TARGET_LENGTH:
     data = f'{data}0{flip_bits(data[::-1])}'
-data = data[:TARGET_LENGTH]
+data = list(data[:TARGET_LENGTH])
 
 while len(data) & 1 != 1:
     # in python 3.12, can potentially use itertools.batched instead
