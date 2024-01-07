@@ -68,6 +68,5 @@ for line in reversed(instructions):
     else:  # swap position
         x, y = int(parts[2]), int(parts[5])
         swap(x, y)
-    # print(scrambled)
 
 print(''.join(scrambled))
