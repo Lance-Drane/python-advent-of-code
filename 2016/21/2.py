@@ -13,9 +13,7 @@ def rotate(x: int) -> list[str]:
     return scrambled[x:] + scrambled[:x]
 
 
-instructions = sys.stdin.readlines()
-
-for line in reversed(instructions):
+for line in reversed(sys.stdin.readlines()):
     parts = line.split()
     if line[0] == 'm':  # move position
         x, y = int(parts[2]), int(parts[5])
