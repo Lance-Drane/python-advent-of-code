@@ -33,13 +33,15 @@ while curr < len(instructions):
                     and instruct[1] == instructions[curr - 1][1]
                 ):
                     registers[instructions[curr - 2][1]] += jnz_check
+                    registers[instruct[1]] = 0
                     curr += 1
                 elif (
-                    instructions[curr - 1][0] == 'dec'
+                    instructions[curr - 2][0] == 'dec'
                     and instructions[curr - 1][0] == 'inc'
                     and instruct[1] == instructions[curr - 2][1]
                 ):
                     registers[instructions[curr - 1][1]] += jnz_check
+                    registers[instruct[1]] = 0
                     curr += 1
                 else:
                     curr += amount

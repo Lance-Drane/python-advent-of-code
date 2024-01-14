@@ -1,0 +1,1 @@
+print('STAR ON ANTENNA')
