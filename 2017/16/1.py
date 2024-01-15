@@ -16,10 +16,8 @@ for dance in input().split(','):
         x, y = dance[1:].split('/')
         if move == 'x':
             x, y = int(x), int(y)
-            swap(x, y)
         else:  # partner
             x, y = programs.index(x), programs.index(y)
-            swap(x, y)
-    print(programs)
+        swap(x, y)
 
 print(''.join(programs))

@@ -19,10 +19,9 @@ def dance(programs: list[str]) -> list[str]:
             x, y = dance[1:].split('/')
             if move == 'x':
                 x, y = int(x), int(y)
-                swap(x, y)
             else:  # partner
                 x, y = programs.index(x), programs.index(y)
-                swap(x, y)
+            swap(x, y)
 
     return programs
 
