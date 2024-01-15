@@ -21,9 +21,6 @@ for _ in range(64):
         current_position = (forward + skip_size) % LIST_SIZE
         skip_size += 1
 
-hex_arr = [format(reduce(lambda x, y: x ^ y, nums[idx : idx + 16]), 'x') for idx in range(0, 256, 16)]
-for idx, item in enumerate(hex_arr):
-    if len(item) == 1:
-        hex_arr[idx] = f'0{item}'
+hex_arr = [format(reduce(lambda x, y: x ^ y, nums[idx : idx + 16]), 'x').zfill(2) for idx in range(0, 256, 16)]
 
 print(''.join(hex_arr))
