@@ -7,7 +7,7 @@ curr = 0
 
 try:
     for init in count(start=1):
-        registers = defaultdict(lambda: 0, {'a': init})
+        registers = defaultdict(int, {'a': init})
         curr = 0
         instructions = base_instructions.copy()
         out = []

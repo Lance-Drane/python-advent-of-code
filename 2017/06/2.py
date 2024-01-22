@@ -4,7 +4,7 @@ from itertools import cycle, islice
 banks = list(map(int, input().split()))
 divisor = len(banks) - 1
 
-seen = defaultdict(lambda: 0, {tuple(banks): 1})
+seen = defaultdict(int, {tuple(banks): 1})
 counter = 0
 
 while True:

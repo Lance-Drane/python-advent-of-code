@@ -18,9 +18,7 @@ for _ in range(5_000_000):
     while b_value & 7 != 0:
         b_value = b_value * B_FACTOR % REMAINDER
 
-    a_bin = format(a_value, 'b').zfill(16)[-16:]
-    b_bin = format(b_value, 'b').zfill(16)[-16:]
-    if a_bin == b_bin:
+    if a_value & 65535 == b_value & 65535:
         count += 1
 
 print(count)

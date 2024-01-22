@@ -12,9 +12,7 @@ count = 0
 for _ in range(40_000_000):
     a_value = a_value * A_FACTOR % REMAINDER
     b_value = b_value * B_FACTOR % REMAINDER
-    a_bin = format(a_value, 'b').zfill(16)[-16:]
-    b_bin = format(b_value, 'b').zfill(16)[-16:]
-    if a_bin == b_bin:
+    if a_value & 65535 == b_value & 65535:
         count += 1
 
 print(count)

@@ -11,11 +11,10 @@ for line in sys.stdin.readlines():
 
 highest += 1
 for starting_picosecond in count(start=0):
-    current_picosecond = starting_picosecond
     caught = False
     for depth in range(highest):
         current_scanner = graph.get(depth, None)
-        if current_scanner and (current_picosecond + depth) % current_scanner == 0:
+        if current_scanner and (starting_picosecond + depth) % current_scanner == 0:
             caught = True
             break
     if not caught:

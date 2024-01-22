@@ -2,7 +2,7 @@ import operator
 import sys
 from collections import defaultdict
 
-registers: defaultdict[str, int] = defaultdict(lambda: 0)
+registers: defaultdict[str, int] = defaultdict(int)
 operations = {
     '>': operator.gt,
     '<': operator.lt,

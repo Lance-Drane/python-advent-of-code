@@ -1,7 +1,7 @@
 from collections import defaultdict
 
 target = int(input())
-graph = defaultdict(lambda: 0, {(0, 0): 1})
+graph = defaultdict(int, {(0, 0): 1})
 
 
 def get_neighbors(point) -> int:

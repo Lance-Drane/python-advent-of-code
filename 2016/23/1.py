@@ -1,7 +1,7 @@
 import sys
 from collections import defaultdict
 
-registers = defaultdict(lambda: 0, {'a': 7})
+registers = defaultdict(int, {'a': 7})
 
 instructions: list[list[str, str, str]] = [line.split() for line in sys.stdin.readlines()]
 curr = 0
