@@ -10,22 +10,22 @@ import time
 
 # TODO maybe use threading here instead of multiprocessing
 from multiprocessing import Pool
+from pathlib import Path
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
-paths = glob.glob('20*/**')
+paths = glob.glob(f'20*{os.path.sep}**')  # Path().glob() doesn't work for this usecase
 
 
 def run_command(path):
     rc = 0
     for num in range(1, 3):
-        with open(f'./{path}/{num}_out.txt', 'rb') as f:
+        with open(str(Path(f'./{path}/{num}_out.txt')), 'rb') as f:
             target = f.read()
-        with open(f'./{path}/in.txt', 'rb') as f:
+        with open(str(Path(f'./{path}/in.txt')), 'rb') as f:
             stdin = f.read()
         start = time.time()
         stdout, _ = subprocess.Popen(
-            f'python ./{path}/{num}.py',
-            shell=True,
+            [sys.executable, str(Path(f'{path}/{num}.py'))],
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
