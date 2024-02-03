@@ -29,7 +29,7 @@ for line in sys.stdin.readlines():
 highest += 1
 severity = 0
 for depth in range(highest):
-    current_scanner = graph.get(depth, None)
+    current_scanner = graph.get(depth)
     if current_scanner and current_scanner.position == 1:
         severity += depth * current_scanner.scanner_range
     for scanner in graph.values():

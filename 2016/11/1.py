@@ -15,7 +15,7 @@ def parse_input():
             element, entity = item.group().split(' ')
             hyphen = element.find('-')
             refined = element if hyphen == -1 else element[:hyphen]
-            num_rep = elements_seen.get(refined, None)
+            num_rep = elements_seen.get(refined)
             if not num_rep:
                 num_rep = len(elements_seen) + 1
                 elements_seen[refined] = num_rep

@@ -13,7 +13,7 @@ highest += 1
 for starting_picosecond in count(start=0):
     caught = False
     for depth in range(highest):
-        current_scanner = graph.get(depth, None)
+        current_scanner = graph.get(depth)
         if current_scanner and (starting_picosecond + depth) % current_scanner == 0:
             caught = True
             break
