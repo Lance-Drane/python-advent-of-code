@@ -3,7 +3,8 @@
 import sys
 
 grid = sys.stdin.read().splitlines()
-position = (0, 0)
+y = 0
+x = grid[0].index('|')
 direction = 2
 """
 0: up
@@ -12,30 +13,23 @@ direction = 2
 3: left
 """
 
-for idx, char in enumerate(grid[0]):
-    if char == '|':
-        position = (0, idx)
-        break
-
 count = 1
 while True:
     if direction == 0:
-        position = (position[0] - 1, position[1])
+        y -= 1
     elif direction == 1:
-        position = (position[0], position[1] + 1)
+        x += 1
     elif direction == 2:
-        position = (position[0] + 1, position[1])
+        y += 1
     else:
-        position = (position[0], position[1] - 1)
+        x -= 1
 
-    next_char = grid[position[0]][position[1]]
+    next_char = grid[y][x]
     if next_char == ' ':
         break
     elif next_char == '+':
-        if direction & 1 == 0:  # vertical
-            direction = 1 if grid[position[0]][position[1] - 1] == ' ' else 3
-        else:  # horiziontal
-            direction = 2 if grid[position[0] - 1][position[1]] == ' ' else 0
+        direction = (1 if grid[y][x - 1] == ' ' else 3) if direction & 1 == 0 else 2 if grid[y - 1][x] == ' ' else 0
+
     count += 1
 
 print(count)
