@@ -23,7 +23,7 @@ for line in sys.stdin.readlines():
 
 
 def take_turn(  # noqa: PLR0913
-    player_turn: bool,  # noqa: FBT001
+    player_turn: bool,
     player_hp: int,
     player_mana: int,
     spent_mana: int,
