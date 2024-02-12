@@ -22,7 +22,7 @@ for line in sys.stdin.readlines():
         boss_start_hp = int(value)
 
 
-def take_turn(  # noqa: PLR0913
+def take_turn(
     player_turn: bool,
     player_hp: int,
     player_mana: int,

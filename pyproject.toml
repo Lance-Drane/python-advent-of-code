@@ -6,7 +6,7 @@ format = {quote-style = 'single'}
 [tool.ruff.lint]
 flake8-quotes = {inline-quotes = 'single', multiline-quotes = 'double'}
 mccabe = { max-complexity = 20 }
-pylint = { max-branches = 15 }
+pylint = { max-branches = 15, max-args = 10 }
 extend-select = [
     'C90',
     'I',
