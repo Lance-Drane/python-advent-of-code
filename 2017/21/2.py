@@ -42,10 +42,7 @@ def rebuild_graph(graph: list[str]):
             row_chunks.append(new_chunk)
 
         for i in range(len(row_chunks[0])):
-            base = ''
-            for part in row_chunks:
-                base += part[i]
-            new_graph.append(base)
+            new_graph.append(''.join(part[i] for part in row_chunks))  # noqa: PERF401
 
     return new_graph
 
